@@ -71,9 +71,9 @@ contract MusicStaking {
       revert UnauthorisedUser();
     }
     StakingPool storage pool = pools[_stakingPoolID];
-    if (msg.value < pool.minStake) {
-      revert NotEnoughToStake();
-    }
+    // if (msg.value < pool.minStake) {
+    //   revert NotEnoughToStake();
+    // }
     pool.totalStaked += msg.value;
     staked[msg.sender][pool.id] = true;
     emit UserStaked(pool.id, msg.sender);

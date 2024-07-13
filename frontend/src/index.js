@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5/react';
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react';
 
 const projectId = process.env.REACT_APP_PROJECT_ID;
 

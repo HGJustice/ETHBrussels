@@ -1,10 +1,20 @@
-import ConnectButton from './components/ConnectButton';
-
+import CreateUser from './components/CreateUser';
+import CreateMusicFile from './components/CreateMusicFile';
+import CreateStakingPool from './components/CreateStakingPool';
+import UserStake from './components/UserStake';
 export default function App() {
   return (
     <>
       <h1>EthBrussels</h1>
       <w3m-button />
+      <h3>Create User 1</h3>
+      <CreateUser />
+      <h3>Create Music File 2</h3>
+      <CreateMusicFile />
+      <h3>Create StakingPool for File 3</h3>
+      <CreateStakingPool />
+      <h3>Fan comes and stakes for listening rights for the song 4</h3>
+      <UserStake />
     </>
   );
 }
