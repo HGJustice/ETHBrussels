@@ -14,8 +14,7 @@ contract LeakBounties {
     bool verified;
   }
 
-  error OnlyFanAccess();
-  error OnlyArtistAccess();
+  error UnAuthorizedUser();
   error ReportDoesntExist();
   error ReportNotVerified();
 
@@ -39,7 +38,7 @@ contract LeakBounties {
   ) external {
     UserManagement.User memory user = userContract.getUsers(msg.sender);
     if (uint(user.role) != 0) {
-      revert OnlyFanAccess();
+      revert UnAuthorizedUser();
     }
 
     LeakReport memory newReport = LeakReport(
@@ -61,7 +60,7 @@ contract LeakBounties {
     }
     UserManagement.User memory user = userContract.getUsers(msg.sender);
     if (uint(user.role) != 1) {
-      revert OnlyArtistAccess();
+      revert UnAuthorizedUser();
     }
     LeakReport storage report = reports[_reportId];
     report.verified = true;
