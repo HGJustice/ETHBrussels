@@ -2,6 +2,7 @@ import CreateUser from './components/CreateUser';
 import CreateMusicFile from './components/CreateMusicFile';
 import CreateStakingPool from './components/CreateStakingPool';
 import UserStake from './components/UserStake';
+import GainAccess from './components/GainAccess';
 export default function App() {
   return (
     <>
@@ -15,6 +16,10 @@ export default function App() {
       <CreateStakingPool />
       <h3>Fan comes and stakes for listening rights for the song 4</h3>
       <UserStake />
+      <h3>
+        Once staking target is reached, users can request access to music file 5
+      </h3>
+      <GainAccess />
     </>
   );
 }

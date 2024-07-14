@@ -4,10 +4,13 @@ import musicStakingABI from '../MusicStakingABI.json';
 
 const contractABI = musicStakingABI;
 
-const contractAddress = '0x8BbfB4196cac5d5d0D65706c06cF62040b50470E';
+const contractAddress = '0xe9eeEF297DF45b6090B1b880568DA4a192Db0b46';
 
 export default function UserStake() {
-  const [formData, setFormData] = useState({ stakingPoolId: 0 });
+  const [formData, setFormData] = useState({
+    stakingPoolId: 0,
+    stakingAmount: 0,
+  });
 
   const handleInputChange = event => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -25,7 +28,7 @@ export default function UserStake() {
 
     // Call the contract's function
     const tx = await contract.stake(formData.stakingPoolId, {
-      value: ethers.parseEther(formData.stakeAmount.toString()),
+      value: formData.stakeAmount,
     });
     await tx.wait();
     console.log('Staked successfully');
@@ -47,7 +50,7 @@ export default function UserStake() {
           placeholder="Stake Amount (ETH)"
           onChange={handleInputChange}
         />
-        <button type="submit">Create Staking Pool</button>
+        <button type="submit">Stake</button>
       </form>
     </div>
   );

@@ -4,7 +4,7 @@ import userABI from '../UserABI.json';
 
 const contractABI = userABI;
 
-const contractAddress = '0xFb7C7c2901681746cbFAB59b8F4545e37FE0Ca6F';
+const contractAddress = '0x0bFcDc28A1Bd2a2928fC0E91279Dd765784a8D42';
 
 export default function CreateUser() {
   const [formData, setFormData] = useState({ username: '' });

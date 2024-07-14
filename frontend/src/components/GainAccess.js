@@ -6,14 +6,16 @@ const contractABI = musicStakingABI;
 
 const contractAddress = '0xe9eeEF297DF45b6090B1b880568DA4a192Db0b46';
 
-export default function CreateStakingPool() {
-  const [formData, setFormData] = useState({ fileId: 0, targetNumber: 0 });
+export default function GainAccess() {
+  const [formData, setFormData] = useState({
+    stakingPoolId: 0,
+  });
 
   const handleInputChange = event => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  async function createStakingPoolHandler(event) {
+  async function gainAccessHandler(event) {
     event.preventDefault();
     // Create a provider
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -24,32 +26,22 @@ export default function CreateStakingPool() {
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
     // Call the contract's function
-    const tx = await contract.createStakingPool(
-      formData.fileId,
-      formData.targetNumber,
-    );
+    const tx = await contract.gainAccess(formData.stakingPoolId);
     await tx.wait();
-    console.log('User created successfully');
+    console.log('Gained Access successfully');
   }
 
   return (
     <div>
-      <form onSubmit={createStakingPoolHandler}>
+      <form onSubmit={gainAccessHandler}>
         <input
           type="number"
-          name="fileId"
-          value={formData.fileId}
-          placeholder="File ID"
+          name="stakingPoolId"
+          value={formData.stakingPoolId}
+          placeholder="Staking Pool"
           onChange={handleInputChange}
         />
-        <input
-          type="number"
-          name="targetNumber"
-          value={formData.targetNumber}
-          placeholder="Target ETH Raised"
-          onChange={handleInputChange}
-        />
-        <button type="submit">Create Staking Pool</button>
+        <button type="submit">Gain access</button>
       </form>
     </div>
   );

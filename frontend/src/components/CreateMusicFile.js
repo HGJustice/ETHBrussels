@@ -4,7 +4,7 @@ import fileABI from '../FileABI.json';
 
 const contractABI = fileABI;
 
-const contractAddress = '0x94CD8161C6Db579A912Db49A663638EA88E96BBA';
+const contractAddress = '0xFB80080EcEB7d6F7A50Ce5E2FD1949ad0949Ec30';
 
 export default function CreateMusicFile() {
   const [formData, setFormData] = useState({ filename: '' });
@@ -35,6 +35,7 @@ export default function CreateMusicFile() {
   return (
     <div>
       <form onSubmit={createMusicFileHandler}>
+        <input type="file" id="fileUpload" name="fileUpload" />
         <input
           type="text"
           name="filename"
