@@ -1,41 +1,59 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
 import fileABI from '../FileABI.json';
+import { create } from 'ipfs-http-client';
 
 const contractABI = fileABI;
-
-const contractAddress = '0xFB80080EcEB7d6F7A50Ce5E2FD1949ad0949Ec30';
+const contractAddress = '0x51E9f257172aF78a8812F77f79c59B05da7A0AE6';
+const client = create('https://ipfs.infura.io:5001/api/v0');
+const projectId = 'YOUR_INFURA_PROJECT_ID'; // Replace with your Infura project ID
+const projectSecret = 'YOUR_INFURA_PROJECT_SECRET';
 
 export default function CreateMusicFile() {
   const [formData, setFormData] = useState({ filename: '' });
+  const [file, setFile] = useState(null);
 
   const handleInputChange = event => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  async function createMusicFileHandler(event) {
-    event.preventDefault();
-    // Create a provider
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    // Get the signer from the provider
-    const signer = await provider.getSigner();
+  const handleFileChange = event => {
+    setFile(event.target.files[0]);
+  };
 
-    // Create the contract instance
+  const uploadToIPFS = async file => {
+    const added = await client.add(file);
+    return `https://ipfs.infura.io/ipfs/${added.path}`;
+  };
+
+  const createMusicFileHandler = async event => {
+    event.preventDefault();
+
+    const ipfsLink = await uploadToIPFS(file);
+    if (!ipfsLink) {
+      console.error('Failed to upload file to IPFS');
+      return;
+    }
+
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    // Call the contract's function
-    const tx = await contract.createMusicFile(
-      formData.filename,
-      'IPFSLINKHERE',
-    );
+    const tx = await contract.createMusicFile(formData.filename, ipfsLink);
     await tx.wait();
-    console.log('File Uploaded');
-  }
+
+    console.log('File Uploaded and Smart Contract Updated');
+  };
 
   return (
     <div>
       <form onSubmit={createMusicFileHandler}>
-        <input type="file" id="fileUpload" name="fileUpload" />
+        <input
+          type="file"
+          id="fileUpload"
+          name="fileUpload"
+          onChange={handleFileChange}
+        />
         <input
           type="text"
           name="filename"

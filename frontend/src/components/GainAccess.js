@@ -4,7 +4,7 @@ import musicStakingABI from '../MusicStakingABI.json';
 
 const contractABI = musicStakingABI;
 
-const contractAddress = '0xe9eeEF297DF45b6090B1b880568DA4a192Db0b46';
+const contractAddress = '0x72a76B2281a3D319bD1fBA2c1174754AD5C60A32';
 
 export default function GainAccess() {
   const [formData, setFormData] = useState({
